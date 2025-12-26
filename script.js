@@ -20,7 +20,7 @@ function initMap() {
     console.log('Initializing map...');
     
     try {
-        // ایجاد لایه مارکر
+        // marker layers
         const markerSource = new ol.source.Vector();
         markerLayer = new ol.layer.Vector({
             source: markerSource,
@@ -33,7 +33,7 @@ function initMap() {
             })
         });
         
-        // ایجاد لایه‌های پایه
+        // base layers
         const osmLayer = new ol.layer.Tile({
             source: new ol.source.OSM(),
             visible: true
@@ -46,13 +46,13 @@ function initMap() {
             visible: false
         });
         
-        // ایجاد ویو
+        // view
         const view = new ol.View({
             center: ol.proj.fromLonLat([51.505, -0.09]), // لندن
             zoom: 10
         });
         
-        // ایجاد نقشه
+        // creat map
         map = new ol.Map({
             target: 'map',
             layers: [osmLayer, cartoLayer, markerLayer],
@@ -68,16 +68,16 @@ function initMap() {
             ])
         });
         
-        // کلیک روی نقشه
+        // click
         map.on('click', handleMapClick);
         
-        // آپدیت زوم
+        // zoom
         map.getView().on('change:resolution', function() {
             const zoom = Math.round(this.getZoom());
             document.getElementById('zoom-level').textContent = zoom;
         });
         
-        // نمایش مختصات ماوس
+        // mouse
         map.on('pointermove', function(evt) {
             if (evt.dragging) return;
             const coord = ol.proj.toLonLat(evt.coordinate);
@@ -119,10 +119,10 @@ async function geocodeLocation(searchTerm) {
         const lon = parseFloat(location.lon);
         const lat = parseFloat(location.lat);
         
-        // اضافه کردن مارکر
+        // add marker
         addMarker([lon, lat], searchTerm);
         
-        // گرفتن آب‌وهوا
+        // weather obtaining
         await fetchWeatherData(lat, lon);
         
         updateStatus('Location found', 'success');
@@ -154,10 +154,10 @@ async function fetchWeatherData(lat, lon) {
         
         const data = await response.json();
         
-        // نمایش اطلاعات
+        // data visualization
         displayWeather(data);
         
-        // آپدیت مختصات
+        // update coordinate
         document.getElementById('current-lat').textContent = lat.toFixed(4);
         document.getElementById('current-lon').textContent = lon.toFixed(4);
         document.getElementById('last-updated').textContent = new Date().toLocaleTimeString();
@@ -231,10 +231,10 @@ function getWeatherIcon(condition) {
 // MARKERS
 // ============================================================================
 function addMarker(coords, title) {
-    // حذف مارکرهای قدیمی
+    // clear previous marker
     markerLayer.getSource().clear();
     
-    // ایجاد مارکر جدید
+    // new marker
     const marker = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat(coords))
     });
@@ -264,14 +264,14 @@ async function handleMapClick(event) {
     const coords = ol.proj.toLonLat(event.coordinate);
     const [lon, lat] = coords;
     
-    // آپدیت مختصات
+    // cordinate update
     document.getElementById('coordinates').textContent = 
         lat.toFixed(4) + ', ' + lon.toFixed(4);
     
-    // اضافه کردن مارکر
+    // add marker
     addMarker([lon, lat], 'Clicked point');
     
-    // گرفتن آب‌وهوا
+    // get weather data
     await fetchWeatherData(lat, lon);
 }
 
@@ -332,7 +332,7 @@ function initApp() {
     console.log('Starting app...');
     
     try {
-        // تنظیم event listeners
+        // event listeners
         document.getElementById('search-btn').addEventListener('click', handleSearch);
         document.getElementById('search-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') handleSearch();
@@ -354,7 +354,7 @@ function initApp() {
             layers[1].setVisible(e.target.value === 'carto');
         });
         
-        // راه‌اندازی نقشه
+        // map
         initMap();
         
         console.log('App initialized!');
@@ -365,5 +365,5 @@ function initApp() {
     }
 }
 
-// شروع برنامه
+// start
 document.addEventListener('DOMContentLoaded', initApp);
