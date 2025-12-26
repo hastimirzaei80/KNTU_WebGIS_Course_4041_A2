@@ -1,4 +1,4 @@
-/* استایل‌های اصلی */
+/* main style */
 .map-container {
     width: 100%;
     height: 500px;
@@ -7,7 +7,7 @@
     border: 1px solid #dee2e6;
 }
 
-/* کنترل‌های OpenLayers */
+/* OpenLayers control */
 .ol-control {
     background-color: rgba(255, 255, 255, 0.8) !important;
     border-radius: 4px !important;
@@ -32,12 +32,12 @@
     color: white;
 }
 
-/* مخفی کردن */
+/* hide */
 .hidden {
     display: none !important;
 }
 
-/* آب‌وهوا */
+/* weather */
 .weather-card {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -83,7 +83,7 @@
     color: #333;
 }
 
-/* رسپانسیو */
+/* response */
 @media (max-width: 768px) {
     .map-container {
         height: 300px;
