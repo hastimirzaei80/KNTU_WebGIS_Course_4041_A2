@@ -62,6 +62,23 @@ webgis-assignment-2/
 └── documentation/          # Additional docs
 
 
+const map = new ol.Map({
+    target: 'map',
+    layers: [osmLayer, markerLayer],
+    view: new ol.View({
+        center: ol.proj.fromLonLat([-0.09, 51.505]),
+        zoom: 10
+    })
+});
+
+
+
+async function geocodeLocation(searchTerm) {
+    const url = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${searchTerm}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    return { lat: data[0].lat, lon: data[0].lon };
+}
 
 
 # Node.js server
