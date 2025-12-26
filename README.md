@@ -1,5 +1,15 @@
 # 🌍 WebGIS Assignment 2 - Interactive Map Application
 
+
+webgis-assignment-2/
+├── index.html              # Main application
+├── README.md               # Documentation
+├── screenshots/            # Screenshots
+│   ├── main-interface.png
+│   ├── weather-display.png
+│   └── mobile-view.png
+└── documentation/          # Additional docs
+
 ## 📋 Project Overview
 Interactive web mapping application with geocoding search and weather data integration using OpenLayers library. Built for WebGIS Course Assignment 2.
 
@@ -51,17 +61,11 @@ Interactive web mapping application with geocoding search and weather data integ
 # Python server
 python -m http.server 8000
 
-
-webgis-assignment-2/
-├── index.html              # Main application
-├── README.md               # Documentation
-├── screenshots/            # Screenshots
-│   ├── main-interface.png
-│   ├── weather-display.png
-│   └── mobile-view.png
-└── documentation/          # Additional docs
+# Node.js server
+npx serve .
 
 
+#map setup
 const map = new ol.Map({
     target: 'map',
     layers: [osmLayer, markerLayer],
@@ -72,7 +76,7 @@ const map = new ol.Map({
 });
 
 
-
+#Geocoding
 async function geocodeLocation(searchTerm) {
     const url = `https://us1.locationiq.com/v1/search.php?key=${API_KEY}&q=${searchTerm}`;
     const response = await fetch(url);
@@ -80,6 +84,3 @@ async function geocodeLocation(searchTerm) {
     return { lat: data[0].lat, lon: data[0].lon };
 }
 
-
-# Node.js server
-npx serve .
